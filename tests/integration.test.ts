@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../src/app';
-import pool from '../src/config/database';
+import pool, { runMigrations } from '../src/config/database';
 import redis from '../src/config/redis';
 import { emailQueue, emailWorker } from '../src/config/queues';
 
@@ -13,6 +13,11 @@ describe('Amrutam API Integration Tests', () => {
         phone: '1234567890',
         role: 'patient'
     };
+
+    beforeAll(async () => {
+        // Ensure database schema is ready
+        await runMigrations();
+    });
 
     afterAll(async () => {
         try {
