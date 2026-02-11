@@ -121,9 +121,14 @@ BEGIN
         ALTER TABLE consultations ADD COLUMN appointment_id UUID REFERENCES appointments(id) ON DELETE SET NULL;
     END IF;
     
-    -- Drop old unneeded columns if they exist
-    ALTER TABLE consultations ALTER COLUMN slot_id DROP NOT NULL;
-    ALTER TABLE consultations ALTER COLUMN scheduled_at DROP NOT NULL;
+    -- Drop old unneeded columns IF THEY EXIST
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='consultations' AND column_name='slot_id') THEN
+        ALTER TABLE consultations ALTER COLUMN slot_id DROP NOT NULL;
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='consultations' AND column_name='scheduled_at') THEN
+        ALTER TABLE consultations ALTER COLUMN scheduled_at DROP NOT NULL;
+    END IF;
 
     -- Update status check constraint
     ALTER TABLE consultations DROP CONSTRAINT IF EXISTS consultations_status_check;
