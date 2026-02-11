@@ -17,7 +17,12 @@ jobs:
           node-version: '24.11.1'
       - run: npm ci
       - run: npm run build
-      - name: Run Tests
-        run: npm test
-      - name: Docker Build Test
-        run: docker build -t amrutam-backend:test .
+      - name: Start Infrastructure
+        run: docker-compose up --build -d
+      - name: Wait for DB & Redis
+        run: sleep 15
+      - name: Run Dockerized Tests
+        run: npm run test:docker
+      - name: CI Cleanup
+        if: always()
+        run: docker-compose down
