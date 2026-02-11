@@ -19,10 +19,8 @@ jobs:
       - run: npm run build
       - name: Start Infrastructure
         run: docker compose up --build -d
-      - name: Wait for DB & Redis
-        run: sleep 15
       - name: Run Dockerized Tests
-        run: npm run test:docker
+        run: docker compose run -e NODE_ENV=test app npm test
       - name: CI Cleanup
         if: always()
         run: docker compose down
