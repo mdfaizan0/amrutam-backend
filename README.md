@@ -25,7 +25,7 @@ A production-grade, scalable, and secure backend system for the Amrutam Telemedi
 2. Create your `.env` from `.env.example`.
 3. Run the entire stack:
    ```bash
-   docker-compose up --build
+   docker compose up --build
    ```
 4. Run Automated Tests:
    ```bash

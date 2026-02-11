@@ -5,7 +5,7 @@ Follow these steps to experience the complete booking flow from scratch.
 ## 0. Boot the System
 Run the following command in your terminal:
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 The API is now live at `http://localhost:3000`.
 

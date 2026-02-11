@@ -18,11 +18,11 @@ jobs:
       - run: npm ci
       - run: npm run build
       - name: Start Infrastructure
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
       - name: Wait for DB & Redis
         run: sleep 15
       - name: Run Dockerized Tests
         run: npm run test:docker
       - name: CI Cleanup
         if: always()
-        run: docker-compose down
+        run: docker compose down

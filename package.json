@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
     "test:local": "cross-env NODE_ENV=test DB_HOST=127.0.0.1 REDIS_HOST=127.0.0.1 jest --detectOpenHandles --forceExit",
-    "test:docker": "docker-compose exec -e NODE_ENV=test app npm test"
+    "test:docker": "docker compose exec -e NODE_ENV=test app npm test"
   },
   "keywords": [],
   "author": "",
