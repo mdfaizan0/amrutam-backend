@@ -27,6 +27,10 @@ A production-grade, scalable, and secure backend system for the Amrutam Telemedi
    ```bash
    docker-compose up --build
    ```
+4. Run Automated Tests:
+   ```bash
+   npm run test:docker
+   ```
    The API will be available at `http://localhost:3000`.
 
 ### API Documentation
@@ -39,6 +43,7 @@ The API follows RESTful standards. Major endpoints include:
 ## Documentation
 - [Architecture Overview](ARCHITECTURE.md) - Design patterns and deep dives.
 - [Security Audit](SECURITY.md) - Security posture and MFA roadmap.
+- [Demo Guide](DEMO_GUIDE.md) - How to run a full cycle from registration to consultation to payment.
 
 ## Project Structure
 ```text

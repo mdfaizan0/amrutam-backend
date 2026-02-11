@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - ./logs:/usr/src/app/logs
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres_password
+      - DB_NAME=amrutam_telemedicine
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=development_secret_key
+    depends_on:
+      - db
+      - redis
+    networks:
+      - amrutam-network
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: amrutam_telemedicine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - amrutam-network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - amrutam-network
+
+networks:
+  amrutam-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

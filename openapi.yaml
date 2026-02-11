@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: Amrutam Telemedicine Backend API
+  description: Technical assessment for Senior Backend Engineer role.
+  version: 1.0.0
+servers:
+  - url: /api/v1
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user (Doctor, Patient, or Admin)
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+                fullName: { type: string }
+                phone: { type: string }
+                role: { type: string, enum: [doctor, patient, admin] }
+  /auth/login:
+    post:
+      summary: Login and get JWT token
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+  /doctors/search:
+    get:
+      summary: Search for doctors with filters
+      tags: [Doctors]
+      parameters:
+        - name: search
+          in: query
+          schema: { type: string }
+  /appointments/book:
+    post:
+      summary: Book an appointment slot
+      tags: [Appointments]
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slot_id: { type: string, format: uuid }
+  /consultations/{id}/prescribe:
+    post:
+      summary: Issue a prescription
+      tags: [Consultations]
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medication_details: { type: string }
+  /payments/capture:
+    post:
+      summary: Capture a simulated payment
+      tags: [Payments]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                consultation_id: { type: string, format: uuid }
+                amount: { type: number }
+  /admin/audit-logs:
+    get:
+      summary: View system-wide audit logs
+      tags: [Admin]
+      security: [{ bearerAuth: [] }]
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
