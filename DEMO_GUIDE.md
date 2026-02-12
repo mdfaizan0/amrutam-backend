@@ -56,7 +56,7 @@ The API is now live at `http://localhost:3000`.
 ```json
 {
   "email": "jane.smith@email.com",
-  "password": "PatientPass123",
+  // any password here,
   "fullName": "Jane Smith",
   "phone": "9001112223",
   "role": "patient"
@@ -107,7 +107,7 @@ The API is now live at `http://localhost:3000`.
 ```json
 {
   "email": "super.admin@amrutam.com",
-  "password": "SuperSecretAdmin123",
+  // any password here,
   "fullName": "Global Admin",
   "phone": "9998887776",
   "role": "admin"
